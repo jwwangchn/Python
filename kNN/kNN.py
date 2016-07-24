@@ -82,7 +82,7 @@ def classifyPerson():
     datingDataMat,datingLabels=file2matrix('datingTestSet.txt')
     normMat,ranges,minVals=autoNorm(datingDataMat)
     inArr=array([ffMiles,percentTats,iceCream])
-    classifierResult=classify0((inArr-minVals)/ranges,normMa,datingLabels,3)
+    classifierResult=classify0((inArr-minVals)/ranges,normMat,datingLabels,3)
     print 'you will probably like this person:',resultList[classifierResult-1]
 
 
@@ -95,4 +95,5 @@ def classifyPerson():
 # ax2=fig2.add_subplot(111)
 # ax2.scatter(datingDataMat[:,0],datingDataMat[:,1],15*array(datingLabels),15*array(datingLabels))
 # plt.show()
-datingClassTest()
+#datingClassTest()
+classifyPerson()
