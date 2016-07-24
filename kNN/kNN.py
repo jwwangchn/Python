@@ -74,6 +74,19 @@ def datingClassTest():
             errorCount+=1.0
     print 'the total arror rate is: %f' % (errorCount/float(numTestVecs))
 
+def classifyPerson():
+    resultList=['not at all','in small doses','in large doses']
+    percentTats=float(raw_input('percentage of time spent playing video games?'))
+    ffMiles=float(raw_input('frequent flier miles earned per years?'))
+    iceCream=float(raw_input('liters of ice cream consumed per years?'))
+    datingDataMat,datingLabels=file2matrix('datingTestSet.txt')
+    normMat,ranges,minVals=autoNorm(datingDataMat)
+    inArr=array([ffMiles,percentTats,iceCream])
+    classifierResult=classify0((inArr-minVals)/ranges,normMa,datingLabels,3)
+    print 'you will probably like this person:',resultList[classifierResult-1]
+
+
+
 # #绘制散点图
 # fig1=plt.figure()
 # ax1=fig1.add_subplot(111)
