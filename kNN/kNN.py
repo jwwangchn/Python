@@ -24,6 +24,20 @@ def classify0(inX,dataSet,labels,k):
     sortedClassCount=sorted(classCount.iteritems(),key=operator.itemgetter(1),reverse=True)
     return sortedClassCount[0][0]
 
+#文件转换程序
+def file2matrix(filename):
+    fr=open(filename)
+    arrayOLines=fr.readlines()
+    numberOfLines=len(arrayOLines)
+    returnMat=zeros((numberOfLines,3)
+    classLabelVector=[]
+    index=0
+    for line in arrayOLines:
+        line=line.strip()
+        listFromLine=line.split('\t')
+        returnMat[index,:]=listFromLine[0:3]
+        classLabelVecor.append(int(listFromLine))
+
 group,labels=createDataSet()
 inXLabels=classify0([0,0],group,labels,3)
 print '输入数据的类别为:',inXLabels
