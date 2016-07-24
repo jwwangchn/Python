@@ -37,12 +37,8 @@ def file2matrix(filename):
         line=line.strip()
         listFromLine=line.split('\t')
         returnMat[index,:]=listFromLine[0:3]
-        if listFromLine[-1] == 'largeDoses':
-            classLabelVector.append(1)            
-        elif listFromLine[-1] == 'smallDoses':
-            classLabelVector.append(2)
-        elif listFromLine[-1] == 'didntLike':
-            classLabelVector.append(3)
+        labels={'largeDoses':1,'smallDoses':2,'didntLike':3}
+        classLabelVector.append(labels[listFromLine[-1]])
         index+=1
     return returnMat,classLabelVector
 
@@ -84,9 +80,10 @@ def classifyPerson():
     inArr=array([ffMiles,percentTats,iceCream])
     classifierResult=classify0((inArr-minVals)/ranges,normMat,datingLabels,3)
     print 'you will probably like this person:',resultList[classifierResult-1]
-
-
-
+    
+    
+    
+    
 # #绘制散点图
 # fig1=plt.figure()
 # ax1=fig1.add_subplot(111)
@@ -95,5 +92,5 @@ def classifyPerson():
 # ax2=fig2.add_subplot(111)
 # ax2.scatter(datingDataMat[:,0],datingDataMat[:,1],15*array(datingLabels),15*array(datingLabels))
 # plt.show()
-#datingClassTest()
-classifyPerson()
+datingClassTest()
+# classifyPerson()
