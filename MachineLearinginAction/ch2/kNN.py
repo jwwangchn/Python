@@ -3,6 +3,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from numpy import *
 import operator
+from os import listdir
 #训练数据
 def createDataSet():
     group=array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]])
@@ -56,9 +57,9 @@ def autoNorm(dataSet):
     normDataSet=normDataSet/tile(ranges,(m,1))
     return normDataSet,ranges,minVals
 
-def datingClassTest():
+def datingClassTest(filename):
     hoRatio=0.1
-    datingDataMat,datingLabels=file2matrix('datingTestSet.txt')
+    datingDataMat,datingLabels=file2matrix(filename)
     normMat,ranges,minVals=autoNorm(datingDataMat)
     m=normMat.shape[0]
     numTestVecs=int(m*hoRatio)
@@ -83,7 +84,41 @@ def classifyPerson():
     
     
     
-    
+def img2vector(filename):
+    returnVect=zeros((1,1024))
+    fr=open(filename)
+    for i in range(32):
+        lineStr=fr.readline()
+        for j in range(32):
+            returnVect[0,32*i+j]=int(lineStr[j])
+    return returnVect
+
+def handwritingClassTest():
+    hwLabels=[]
+    trainingFileList=listdir('MachineLearinginAction/ch2/trainingDigits')
+    m=len(trainingFileList)
+    trainingMat=zeros((m,1024))
+    for i in range(m):
+        fileNameStr=trainingFileList[i]
+        fileStr=fileNameStr.split('.')[0]
+        classNumStr=int(fileStr.split('_')[0])
+        hwLabels.append(classNumStr)
+        trainingMat[i,:]=img2vector('MachineLearinginAction/ch2/trainingDigits/%s' % fileNameStr)
+    testFileList=listdir('MachineLearinginAction/ch2/testDigits')
+    errorCount=0.0
+    mTest=len(testFileList)
+    for i in range(mTest):
+        fileNameStr=testFileList[i]
+        fileStr=fileNameStr.split('.')[0]
+        classNumStr=int(fileStr.split('_')[0])
+        vectorUnderTest=img2vector('MachineLearinginAction/ch2/testDigits/%s' % fileNameStr)
+        classifierResult=classify0(vectorUnderTest,trainingMat,hwLabels,3)
+        print "the classifier came back with: %d, the real answer is: %d" % (classifierResult,classNumStr)
+        if classifierResult != classNumStr:
+            errorCount+=1.0
+    print '\nthe total number of errors is: %d' % errorCount
+    print "\nthe total error rate is: %f " % (errorCount/float(mTest))
+
 # #绘制散点图
 # fig1=plt.figure()
 # ax1=fig1.add_subplot(111)
@@ -92,5 +127,8 @@ def classifyPerson():
 # ax2=fig2.add_subplot(111)
 # ax2.scatter(datingDataMat[:,0],datingDataMat[:,1],15*array(datingLabels),15*array(datingLabels))
 # plt.show()
-datingClassTest()
+
 # classifyPerson()
+datingClassTest('MachineLearinginAction/ch2/datingTestSet.txt')
+
+handwritingClassTest()
