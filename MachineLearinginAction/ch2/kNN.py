@@ -82,8 +82,6 @@ def classifyPerson():
     classifierResult=classify0((inArr-minVals)/ranges,normMat,datingLabels,3)
     print 'you will probably like this person:',resultList[classifierResult-1]
     
-    
-    
 def img2vector(filename):
     returnVect=zeros((1,1024))
     fr=open(filename)
