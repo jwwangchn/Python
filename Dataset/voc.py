@@ -301,7 +301,8 @@ if __name__ == "__main__":
     #     img, target = voc.getitem(index = idx)
     #     voc.vis_anno(img, target)
 
+
     # resize image and annotation
     # voc.proc_img(save_path = '/home/jwwangchn/data/UAV-BD-Release-V1.0.0/ICRA2019/Release_resize/images', relative_root=False)
-    voc.xml2kitti(save_path = '/home/jwwangchn/data/UAV-BD-Release-V1.0.0/ICRA2019/Release_resize/labels', relative_root=False)
+    # voc.xml2kitti(save_path = '/home/jwwangchn/data/UAV-BD-Release-V1.0.0/ICRA2019/Release_resize/labels', relative_root=False)
 
