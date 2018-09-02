@@ -11,6 +11,8 @@ if sys.version_info[0] == 2:
 else:
     import xml.etree.ElementTree as ET
 
+from pascal_voc_io import PascalVocWriter
+
 VOC_CLASSES = ( '__background__', 'bottle')
 
 # for making bounding boxes pretty
@@ -219,6 +221,7 @@ class VOC:
 
     def xml2kitti(self, save_path, relative_root=True):
         '''
+        Convert xml label files to KITTI format files.
         Arguments:
             save_path : Path to save kittl label
         Returns:
@@ -250,6 +253,7 @@ class VOC:
 
     def extract_test_img(self, save_path, relative_root=True):
         '''
+        Extract test images to a fold.
         Arguments:
             save_path : save test images
         Returns:
@@ -267,6 +271,15 @@ class VOC:
         print("Finish copy all test files!")
     
     def vis_anno(self, img, targets):
+        '''
+        Visual annotation on images.
+        Arguments:
+            img : image of numpy format
+            targets: rotation -> [cx, cy, w, h, angle, label]
+                     normal -> [xmin, ymin, xmax, ymax, label] 
+        Returns:
+            No
+        '''
         if self.rotation:
             for target in targets:
                 rect = ((int(target[0]), int(target[1])), (int(target[2]), int(target[3])), int(target[4] * 180 / np.pi))
@@ -277,6 +290,9 @@ class VOC:
             cv2.waitKey(0)
     
     def proc_img(self, save_path, relative_root=True):
+        '''
+            Use Preproc class to resize iamges and save images to save_path.
+        '''
         if relative_root:
             save_path = os.path.join(self.root, save_path.split('/')[-1])
         if not os.path.exists(save_path):
@@ -289,20 +305,35 @@ class VOC:
             cv2.imwrite(file_name, img)
         print("Finish processing and saving images!")
 
+    # def save_pascal_voc(self, img_fold_name, img_file_name, img_size, save_path, relative_root=True):
+    #     writer = PascalVocWriter(foldername=img_fold_name, 
+    #                             filename=img_file_name, 
+    #                             imgSize=img_size)
+    #     xmin, ymin, xmax, ymax = 
+    #     writer.addBndBox()
+
+    # def kitti2yolo():
+
+
 if __name__ == "__main__":
     root = '/home/jwwangchn/data/UAV-BD-Release-V1.0.0'
     image_set = ['train', 'val', 'test']
+    # image_set = 'all'
     preproc = Preproc(resize=[424, 240], rotation=True)
     # preproc = None
     voc = VOC(root, image_set, preproc=preproc, rotation=True, getitem_mode=0)
+    
 
-    # visual annotat ions
+
+    # 1. generate image set
+    # voc.generate_image_set(save_path='/home/jwwangchn/data/UAV-BD-Release-V1.1.0/ImageSets', relative_root=False, label_path='/home/jwwangchn/data/UAV-BD-Release-V1.1.0/labels_424x240')
+    
+    # 2. visual annotat ions
     # for idx in np.arange(5):
     #     img, target = voc.getitem(index = idx)
     #     voc.vis_anno(img, target)
 
-
-    # resize image and annotation
+    # 3. resize image and annotation
     # voc.proc_img(save_path = '/home/jwwangchn/data/UAV-BD-Release-V1.0.0/ICRA2019/Release_resize/images', relative_root=False)
     # voc.xml2kitti(save_path = '/home/jwwangchn/data/UAV-BD-Release-V1.0.0/ICRA2019/Release_resize/labels', relative_root=False)
 
