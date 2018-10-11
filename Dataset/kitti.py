@@ -305,15 +305,23 @@ class VOC:
             cv2.imwrite(file_name, img)
         print("Finish processing and saving images!")
 
-    # def save_pascal_voc(self, img_fold_name, img_file_name, img_size, save_path, relative_root=True):
-    #     writer = PascalVocWriter(foldername=img_fold_name, 
-    #                             filename=img_file_name, 
-    #                             imgSize=img_size)
-    #     xmin, ymin, xmax, ymax = 
-    #     writer.addBndBox()
-
-    # def kitti2yolo():
-
+    def load_kitti(self, image_path, label_path):
+        for label_file in os.listdir(label_path):
+            label = os.path.join(label_path, label_file)
+            image_file = os.path.join(image_path, label_file.split('.')[0] + '.jpg')
+            target = []
+            with open(label, 'r') as f:
+                lines = f.readlines()
+                for line in lines:
+                    line = line.strip('\n')
+                    line = line.split(' ')
+                    print(line)
+                    line = map(float, line[1:])
+                    print(line)
+                    target.append([line[3], line[4], line[5], line[6], line[13], 1])
+            print(image_file)
+            img = cv2.imread(image_file)
+            self.vis_anno(img, target)
 
 if __name__ == "__main__":
     root = '/home/jwwangchn/data/UAV-BD-Release-V1.1.0'
@@ -329,11 +337,12 @@ if __name__ == "__main__":
     # voc.generate_image_set(save_path='/home/jwwangchn/data/UAV-BD-Release-V1.1.0/ImageSets', relative_root=False, label_path='/home/jwwangchn/data/UAV-BD-Release-V1.1.0/labels_424x240')
     
     # 2. visual annotat ions
-    for idx in np.arange(5):
-        img, target = voc.getitem(index = idx)
-        voc.vis_anno(img, target)
+    # for idx in np.arange(5):
+    #     img, target = voc.getitem(index = idx)
+    #     voc.vis_anno(img, target)
 
     # 3. resize image and annotation
     # voc.proc_img(save_path = '/home/jwwangchn/data/UAV-BD-Release-V1.0.0/ICRA2019/Release_resize/images', relative_root=False)
     # voc.xml2kitti(save_path = '/home/jwwangchn/data/UAV-BD-Release-V1.0.0/ICRA2019/Release_resize/labels', relative_root=False)
 
+    voc.load_kitti('/home/jwwangchn/data/UAV-BD-Release-V1.1.0/JPEGImages_424x240', '/home/jwwangchn/data/UAV-BD-Release-V1.1.0/labels_424x240')
