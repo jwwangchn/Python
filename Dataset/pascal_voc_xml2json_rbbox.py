@@ -96,7 +96,7 @@ def parseXmlFiles(xml_path):
     for f in os.listdir(xml_path):
         if not f.endswith('.xml'):
             continue
-        image_name = f.split('.')[0]+'.jpg'
+        # image_name = f.split('.')[0]+'.png'
         bndbox = dict()
         size = dict()
         current_image_id = None
@@ -125,7 +125,7 @@ def parseXmlFiles(xml_path):
             
             if elem.tag == 'filename':
                 file_name = elem.text
-                file_name = image_name
+                # file_name = image_name
                 if file_name in category_set:
                     raise Exception('file_name duplicated')
                 
@@ -203,7 +203,7 @@ def parseXmlFiles(xml_path):
                     addAnnoItem(object_name, current_image_id, current_category_id, bbox, rbbox)
 
 if __name__ == '__main__':
-    xml_path = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/Annotations_rbbox'
-    json_file = 'instances.json'
+    xml_path = '/home/jwwangchn/data/DOTA_KITTI/train/labeltxt'
+    json_file = '/home/jwwangchn/data/DOTA_KITTI/train/dota_rbbox.json'
     parseXmlFiles(xml_path)
     json.dump(coco, open(json_file, 'w'))

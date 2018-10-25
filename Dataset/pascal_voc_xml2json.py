@@ -166,7 +166,7 @@ def parseXmlFiles(xml_path):
                     addAnnoItem(object_name, current_image_id, current_category_id, bbox )
 
 if __name__ == '__main__':
-    xml_path = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/Annotations_bbox'
-    json_file = 'instances.json'
+    xml_path = '/home/jwwangchn/data/DOTA_KITTI/train/labeltxt'
+    json_file = '/home/jwwangchn/data/DOTA_KITTI/train/labeltxt/dota_rbbox.json'
     parseXmlFiles(xml_path)
     json.dump(coco, open(json_file, 'w'))

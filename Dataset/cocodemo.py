@@ -7,10 +7,8 @@ import cv2
 
 pylab.rcParams['figure.figsize'] = (8.0, 10.0)
 
-dataDir='/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0'
-dataType='JPEGImages'
-imgDir = dataDir + '/' + dataType + '/'
-annFile='/home/jwwangchn/data/VOCdevkit/instances.json'
+imgDir = '/home/jwwangchn/data/DOTA_KITTI/train/images/'
+annFile='/home/jwwangchn/data/DOTA_KITTI/train/dota_rbbox.json'
 
 # initialize COCO api for instance annotations
 coco=COCO(annFile)
@@ -25,8 +23,8 @@ print('COCO supercategories: \n{}'.format(' '.join(nms)))
 
 # get all images containing given categories, select one at random
 catIds = coco.getCatIds(catNms=['bottle']);
-imgIds = coco.getImgIds(catIds=catIds );
-imgIds = coco.getImgIds(imgIds = [20180002250])
+imgIds = coco.getImgIds(catIds=catIds);
+imgIds = coco.getImgIds(imgIds = [20180000001])
 img = coco.loadImgs(imgIds[np.random.randint(0,len(imgIds))])[0]
 
 # load and display image
@@ -40,16 +38,16 @@ plt.imshow(I);
 plt.axis('off')
 annIds = coco.getAnnIds(imgIds=img['id'], catIds=catIds, iscrowd=None)
 anns = coco.loadAnns(annIds)
-
+print(anns)
 # display mask
-# coco.showAnns(anns)
-# plt.show()
+coco.showAnns(anns)
+plt.show()
 
 # display bbox
-img = cv2.imread(imgDir + img['file_name'])
-bbox = anns[0]['bbox']
-cv2.rectangle(img, (int(bbox[0] - bbox[2]/2.0), int(bbox[1] - bbox[3] / 2.0)), (int(bbox[0] + bbox[2]/2.0), int(bbox[1] + bbox[3] / 2.0)), (255, 0, 0))
-cv2.imshow('demo', img)
-cv2.waitKey(0)
+# img = cv2.imread(imgDir + img['file_name'])
+# bbox = anns[0]['bbox']
+# cv2.rectangle(img, (int(bbox[0] - bbox[2]/2.0), int(bbox[1] - bbox[3] / 2.0)), (int(bbox[0] + bbox[2]/2.0), int(bbox[1] + bbox[3] / 2.0)), (255, 0, 0))
+# cv2.imshow('demo', img)
+# cv2.waitKey(0)
 
 
