@@ -96,7 +96,7 @@ def parseXmlFiles(xml_path):
     for f in os.listdir(xml_path):
         if not f.endswith('.xml'):
             continue
-        # image_name = f.split('.')[0]+'.png'
+        # image_name = f.split('.')[0]+'.jpg'
         bndbox = dict()
         size = dict()
         current_image_id = None
@@ -107,7 +107,7 @@ def parseXmlFiles(xml_path):
         size['depth'] = None
 
         xml_file = os.path.join(xml_path, f)
-        print(xml_file)
+        # print(xml_file)
 
         tree = ET.parse(xml_file)
         root = tree.getroot()
@@ -133,7 +133,7 @@ def parseXmlFiles(xml_path):
             elif current_image_id is None and file_name is not None and size['width'] is not None:
                 if file_name not in image_set:
                     current_image_id = addImgItem(file_name, size)
-                    print('add image with {} and {}'.format(file_name, size))
+                    # print('add image with {} and {}'.format(file_name, size))
                 else:
                     raise Exception('duplicated image: {}'.format(file_name)) 
             #subelem is <width>, <height>, <depth>, <name>, <bndbox>
@@ -191,19 +191,34 @@ def parseXmlFiles(xml_path):
                     ymin = round(min(minAreaBox[1::2]), 2)
                     xmax = round(max(minAreaBox[::2]), 2)
                     ymax = round(max(minAreaBox[1::2]), 2)
+                    
                     #x
-                    bbox.append(round(xmin + (xmax - xmin)/2.0, 2))
+                    bbox_x = round(xmin, 2)
+                    bbox.append(round(xmin, 2))
                     #y
-                    bbox.append(round(ymin + (ymax - ymin)/2.0, 2))
+                    bbox_y = round(ymin, 2)
+                    bbox.append(round(ymin, 2))
                     #w
+                    bbox_w = xmax - xmin
                     bbox.append(xmax - xmin)
                     #h
+                    bbox_h = ymax - ymin
                     bbox.append(ymax - ymin)
-                    print('add annotation with {},{},{},{}, {}'.format(object_name, current_image_id, current_category_id, bbox, rbbox))
+                    if bbox_w == 0 or bbox_h == 0:
+                        # print(cx, cy, w, h, angle)
+                        # print(minAreaBox)
+                        print(bbox_x, bbox_y, bbox_w, bbox_h)
+                        print('error!!!!!!!!!!!!!!!!!!!!')
+                    
+                    # print('add annotation with {},{},{},{}, {}'.format(object_name, current_image_id, current_category_id, bbox, rbbox))
                     addAnnoItem(object_name, current_image_id, current_category_id, bbox, rbbox)
 
 if __name__ == '__main__':
     xml_path = '/home/jwwangchn/data/DOTA_KITTI/train/labeltxt'
     json_file = '/home/jwwangchn/data/DOTA_KITTI/train/dota_rbbox.json'
+
+    # xml_path = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/Annotations_rbbox'
+    # json_file = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/uav_bd_rbbox.json'
+
     parseXmlFiles(xml_path)
     json.dump(coco, open(json_file, 'w'))
