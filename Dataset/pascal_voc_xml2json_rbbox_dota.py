@@ -4,6 +4,12 @@ import json
 import numpy as np
 import cv2
 
+dota = {'harbor': 1, 'ship': 2, 'small-vehicle': 3, 'large-vehicle': 4, 'storage-tank': 5, 'plane': 6, 'soccer-ball-field': 7, 'bridge': 8, 'baseball-diamond': 9, 'tennis-court': 10, 'helicopter': 11, 'roundabout': 12, 'swimming-pool': 13, 'ground-track-field': 14, 'basketball-court': 15}
+
+# dota = {'bridge': 15, 'tennis-court': 7, 'baseball-diamond': 8, 'basketball-court': 11, 'harbor': 2, 'ground-track-field': 13, 'small-vehicle': 3, 'plane': 5, 'storage-tank': 12, 'large-vehicle': 4, 'roundabout': 9, 'soccer-ball-field': 6, 'helicopter': 14, 'ship': 1, 'swimming-pool': 10}
+
+
+
 coco = dict()
 coco['images'] = []
 coco['type'] = 'instances'
@@ -14,7 +20,11 @@ category_set = dict()
 image_set = set()
 
 category_item_id = 0
+<<<<<<< HEAD:Dataset/pascal_voc_xml2json_rbbox.py
 image_id = 201800001
+=======
+image_id = 2018000001
+>>>>>>> 0b51482267e2bf4cff1980f1d6fd0e11a4b0e849:Dataset/pascal_voc_xml2json_rbbox_dota.py
 annotation_id = 0
 
 def addCatItem(name):
@@ -22,6 +32,7 @@ def addCatItem(name):
     category_item = dict()
     category_item['supercategory'] = 'none'
     category_item_id += 1
+    category_item_id = dota[name]
     category_item['id'] = category_item_id
     category_item['name'] = name
     coco['categories'].append(category_item)
@@ -37,6 +48,7 @@ def addImgItem(file_name, size):
     if size['height'] is None:
         raise Exception('Could not find height tag in xml file.')
     image_id += 1
+    print(image_id)
     image_item = dict()
     print(image_id)
     image_item['id'] = image_id
@@ -116,6 +128,7 @@ def parseXmlFiles(xml_path):
             raise Exception('pascal voc xml root element should be annotation, rather than {}'.format(root.tag))
 
         #elem is <folder>, <filename>, <size>, <object>
+        # print(category_set)
         for elem in root:
             current_parent = elem.tag
             current_sub = None
@@ -215,11 +228,22 @@ def parseXmlFiles(xml_path):
                     addAnnoItem(object_name, current_image_id, current_category_id, bbox, rbbox)
 
 if __name__ == '__main__':
+<<<<<<< HEAD:Dataset/pascal_voc_xml2json_rbbox.py
     # xml_path = '/home/jwwangchn/data/DOTA_KITTI/train/labeltxt'
     # json_file = '/home/jwwangchn/data/DOTA_KITTI/train/dota_rbbox.json'
 
     xml_path = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/trainval_annotations'
     json_file = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/uav_bd_trainval_rbbox.json'
+=======
+    # xml_path = '/data/dota/dota_clip_voc/val/Annotations'
+    # json_file = '/data/dota/dota_clip_coco/annotations/dota_rbbox_val.json'
+
+    xml_path = '/data/dota/dota_clip_voc/trainval/Annotations'
+    json_file = '/data/dota/dota_clip_coco/annotations/dota_rbbox_trainval.json'
+
+    # xml_path = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/test_annotations'
+    # json_file = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/uav_bd_test_rbbox.json'
+>>>>>>> 0b51482267e2bf4cff1980f1d6fd0e11a4b0e849:Dataset/pascal_voc_xml2json_rbbox_dota.py
 
     parseXmlFiles(xml_path)
     json.dump(coco, open(json_file, 'w'))
