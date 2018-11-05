@@ -14,7 +14,7 @@ category_set = dict()
 image_set = set()
 
 category_item_id = 0
-image_id = 20180000000
+image_id = 201800001
 annotation_id = 0
 
 def addCatItem(name):
@@ -38,6 +38,7 @@ def addImgItem(file_name, size):
         raise Exception('Could not find height tag in xml file.')
     image_id += 1
     image_item = dict()
+    print(image_id)
     image_item['id'] = image_id
     image_item['file_name'] = file_name
     image_item['width'] = size['width']
@@ -96,7 +97,7 @@ def parseXmlFiles(xml_path):
     for f in os.listdir(xml_path):
         if not f.endswith('.xml'):
             continue
-        # image_name = f.split('.')[0]+'.jpg'
+        image_name = f.split('.')[0]+'.jpg'
         bndbox = dict()
         size = dict()
         current_image_id = None
@@ -125,7 +126,7 @@ def parseXmlFiles(xml_path):
             
             if elem.tag == 'filename':
                 file_name = elem.text
-                # file_name = image_name
+                file_name = image_name
                 if file_name in category_set:
                     raise Exception('file_name duplicated')
                 
@@ -214,11 +215,11 @@ def parseXmlFiles(xml_path):
                     addAnnoItem(object_name, current_image_id, current_category_id, bbox, rbbox)
 
 if __name__ == '__main__':
-    xml_path = '/home/jwwangchn/data/DOTA_KITTI/train/labeltxt'
-    json_file = '/home/jwwangchn/data/DOTA_KITTI/train/dota_rbbox.json'
+    # xml_path = '/home/jwwangchn/data/DOTA_KITTI/train/labeltxt'
+    # json_file = '/home/jwwangchn/data/DOTA_KITTI/train/dota_rbbox.json'
 
-    # xml_path = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/Annotations_rbbox'
-    # json_file = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/uav_bd_rbbox.json'
+    xml_path = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/trainval_annotations'
+    json_file = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/uav_bd_trainval_rbbox.json'
 
     parseXmlFiles(xml_path)
     json.dump(coco, open(json_file, 'w'))
