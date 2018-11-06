@@ -20,11 +20,8 @@ category_set = dict()
 image_set = set()
 
 category_item_id = 0
-<<<<<<< HEAD:Dataset/pascal_voc_xml2json_rbbox.py
-image_id = 201800001
-=======
+
 image_id = 2018000001
->>>>>>> 0b51482267e2bf4cff1980f1d6fd0e11a4b0e849:Dataset/pascal_voc_xml2json_rbbox_dota.py
 annotation_id = 0
 
 def addCatItem(name):
@@ -228,13 +225,7 @@ def parseXmlFiles(xml_path):
                     addAnnoItem(object_name, current_image_id, current_category_id, bbox, rbbox)
 
 if __name__ == '__main__':
-<<<<<<< HEAD:Dataset/pascal_voc_xml2json_rbbox.py
-    # xml_path = '/home/jwwangchn/data/DOTA_KITTI/train/labeltxt'
-    # json_file = '/home/jwwangchn/data/DOTA_KITTI/train/dota_rbbox.json'
 
-    xml_path = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/trainval_annotations'
-    json_file = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/uav_bd_trainval_rbbox.json'
-=======
     # xml_path = '/data/dota/dota_clip_voc/val/Annotations'
     # json_file = '/data/dota/dota_clip_coco/annotations/dota_rbbox_val.json'
 
@@ -243,7 +234,6 @@ if __name__ == '__main__':
 
     # xml_path = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/test_annotations'
     # json_file = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/uav_bd_test_rbbox.json'
->>>>>>> 0b51482267e2bf4cff1980f1d6fd0e11a4b0e849:Dataset/pascal_voc_xml2json_rbbox_dota.py
 
     parseXmlFiles(xml_path)
     json.dump(coco, open(json_file, 'w'))
