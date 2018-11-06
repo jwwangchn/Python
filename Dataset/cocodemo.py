@@ -8,14 +8,15 @@ import cv2
 
 pylab.rcParams['figure.figsize'] = (8.0, 10.0)
 
+
 imgDir = '/data/dota/dota_clip_coco/val/'
 annFile='/data/dota/dota_clip_coco/annotations/dota_rbbox_val.json'
 
 # imgDir = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/JPEGImages/'
-# annFile='/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/uav_bd_rbbox.json'
+# annFile='/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/uav_bd_train_rbbox.json'
 
-# imgDir = '/home/jwwangchn/data/COCO/val2017/'
-# annFile='/home/jwwangchn/data/COCO/annotations/instances_val2017.json'
+imgDir = '/home/jwwangchn/data/dota/dota_clip_coco/train/'
+annFile='/home/jwwangchn/data/dota/dota_clip_coco/annotations/dota_rbbox_train.json'
 
 # initialize COCO api for instance annotations
 coco=COCO(annFile)
@@ -29,7 +30,8 @@ nms = set([cat['supercategory'] for cat in cats])
 print('COCO supercategories: \n{}'.format(' '.join(nms)))
 
 # get all images containing given categories, select one at random
-catIds = coco.getCatIds(catNms=['large-vehicle']);
+
+catIds = coco.getCatIds(catNms=['vehicle']);
 imgIds = coco.getImgIds(catIds=catIds);
 
 for imgId in imgIds:
@@ -41,8 +43,6 @@ for imgId in imgIds:
     # I = io.imread('%s/images/%s/%s'%(dataDir,dataType,img['file_name']))
     # use url to load image
     I = io.imread(imgDir + img['file_name'])
-
-
     # load and display instance annotations
     plt.imshow(I); 
     plt.axis('off')
