@@ -9,8 +9,8 @@ import cv2
 pylab.rcParams['figure.figsize'] = (8.0, 10.0)
 
 
-# imgDir = '/data/dota/dota_clip_coco/train/'
-# annFile='/data/dota/dota_clip_coco/annotations/dota_rbbox_train.json'
+imgDir = '/data/dota/dota_clip_coco/val/'
+annFile='/data/dota/dota_clip_coco/annotations/dota_rbbox_val.json'
 
 # imgDir = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/JPEGImages/'
 # annFile='/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/uav_bd_train_rbbox.json'
@@ -36,7 +36,7 @@ imgIds = coco.getImgIds(catIds=catIds);
 
 for imgId in imgIds:
 
-    imgIds = coco.getImgIds(imgIds = [imgId])      # 555705, cat
+    imgIds = coco.getImgIds(imgIds = [2018019951])      # 555705, cat
     img = coco.loadImgs(imgIds[np.random.randint(0,len(imgIds))])[0]
 
     # load and display image

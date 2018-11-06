@@ -8,8 +8,6 @@ dota = {'harbor': 1, 'ship': 2, 'small-vehicle': 3, 'large-vehicle': 4, 'storage
 
 # dota = {'bridge': 15, 'tennis-court': 7, 'baseball-diamond': 8, 'basketball-court': 11, 'harbor': 2, 'ground-track-field': 13, 'small-vehicle': 3, 'plane': 5, 'storage-tank': 12, 'large-vehicle': 4, 'roundabout': 9, 'soccer-ball-field': 6, 'helicopter': 14, 'ship': 1, 'swimming-pool': 10}
 
-
-
 coco = dict()
 coco['images'] = []
 coco['type'] = 'instances'
@@ -236,4 +234,6 @@ if __name__ == '__main__':
     # json_file = '/home/jwwangchn/data/VOCdevkit/UAV-Bottle/UAV-Bottle-V2.0.0/uav_bd_test_rbbox.json'
 
     parseXmlFiles(xml_path)
+    # coco['categories'] = sorted(coco['categories'], key=lambda k: k['id'])
+    coco['categories'] = [{'supercategory': 'none', 'id': 2, 'name': 'ship'}, {'supercategory': 'none', 'id': 1, 'name': 'harbor'}, {'supercategory': 'none', 'id': 3, 'name': 'small-vehicle'}, {'supercategory': 'none', 'id': 4, 'name': 'large-vehicle'}, {'supercategory': 'none', 'id': 6, 'name': 'plane'}, {'supercategory': 'none', 'id': 7, 'name': 'soccer-ball-field'}, {'supercategory': 'none', 'id': 10, 'name': 'tennis-court'}, {'supercategory': 'none', 'id': 9, 'name': 'baseball-diamond'}, {'supercategory': 'none', 'id': 12, 'name': 'roundabout'}, {'supercategory': 'none', 'id': 13, 'name': 'swimming-pool'}, {'supercategory': 'none', 'id': 15, 'name': 'basketball-court'}, {'supercategory': 'none', 'id': 5, 'name': 'storage-tank'}, {'supercategory':'none', 'id': 14, 'name': 'ground-track-field'}, {'supercategory': 'none', 'id': 11, 'name': 'helicopter'}, {'supercategory': 'none', 'id': 8, 'name': 'bridge'}]
     json.dump(coco, open(json_file, 'w'))
